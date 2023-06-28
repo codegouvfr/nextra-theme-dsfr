@@ -19,9 +19,9 @@
     </a>
 </p>
 <p align="center">
-  <a href="https://github.com/codegouvfr/nextra-theme-dsfr">Home</a>
+  <a href="https://github.com/codegouvfr/nextra-dsfr-demo">Demo repo</a>
   -
-  <a href="https://github.com/codegouvfr/nextra-theme-dsfr">Documentation</a>
+  <a href="https://nextra.react-dsfr.fr">Show me what it looks like</a>
 </p>
 
 # Install / Import
