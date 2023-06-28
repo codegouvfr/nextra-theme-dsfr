@@ -37,8 +37,6 @@ $ yarn add nextra-theme-dsfr-docs @codegouvfr/react-dsfr @mui/material @emotion/
 You have made some changes to the code and you want to test them
 in your app before submitting a pull request?
 
-Assuming `you/my-app` have `nextra-theme-dsfr-docs` as a dependency.
-
 ```bash
 cd ~/github
 git clone https://github.com/codegouvfr/nextra-dsfr-demo
