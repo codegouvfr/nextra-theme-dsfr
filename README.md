@@ -61,10 +61,6 @@ yarn start # Or whatever my-app is using for starting the project
 You don't have to use `~/github` as reference path. Just make sure `nextra-dsfr-demo` and `nextra-theme-dsfr`
 are in the same directory.
 
-> Note for the maintainer: You might run into issues if you do not list all your singleton dependencies in
-> `src/link-in-app.js -> singletonDependencies`. A singleton dependency is a dependency that can
-> only be present once in an App. Singleton dependencies are usually listed as peerDependencies example `react`, `@emotion/*`.
-
 ## Releasing
 
 For releasing a new version on GitHub and NPM you don't need to create a tag.  
