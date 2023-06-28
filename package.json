@@ -1,6 +1,6 @@
 {
     "name": "@codegouvfr/nextra-theme-dsfr",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "description": "DSFR theme for Nextra",
     "repository": {
         "type": "git",
