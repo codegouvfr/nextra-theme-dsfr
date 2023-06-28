@@ -1,10 +1,10 @@
 {
-    "name": "#{REPO_NAME}#",
+    "name": "nextra-theme-dsfr-docs",
     "version": "0.0.0",
-    "description": "#{DESC}#",
+    "description": "DSFR theme for Nextra",
     "repository": {
         "type": "git",
-        "url": "git://github.com/#{USER_OR_ORG}#/#{REPO_NAME}#.git"
+        "url": "git://github.com/codegouvfr/nextra-theme-dsfr-docs.git"
     },
     "scripts": {
         "build": "tsc",
@@ -36,7 +36,7 @@
             "pre-commit": "lint-staged -v"
         }
     },
-    "author": "u/#{USER_OR_ORG}#",
+    "author": "u/codegouvfr",
     "license": "MIT",
     "files": [
         "src/",
