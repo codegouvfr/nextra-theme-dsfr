@@ -19,7 +19,7 @@
     </a>
 </p>
 <p align="center">
-  <a href="https://github.com/codegouvfr/nextra-dsfr-demo">Demo repo</a>
+  <a href="https://github.com/garronej/nextra-dsfr-demo">Demo repo</a>
   -
   <a href="https://nextra.react-dsfr.fr">Show me what it looks like</a>
 </p>
@@ -39,7 +39,7 @@ in your app before submitting a pull request?
 
 ```bash
 cd ~/github
-git clone https://github.com/codegouvfr/nextra-dsfr-demo
+git clone https://github.com/garronej/nextra-dsfr-demo
 cd nextra-dsfr-demo
 yarn
 
