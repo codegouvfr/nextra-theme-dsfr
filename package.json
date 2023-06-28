@@ -68,5 +68,8 @@
         "next": "^13.4.7",
         "nextra": "^2.8.0",
         "@emotion/server": "^11.11.0"
+    },
+    "publishConfig": {
+        "access": "public"
     }
 }
