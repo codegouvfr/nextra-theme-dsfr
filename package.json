@@ -1,6 +1,6 @@
 {
     "name": "nextra-theme-dsfr-docs",
-    "version": "0.0.0",
+    "version": "0.0.1",
     "description": "DSFR theme for Nextra",
     "repository": {
         "type": "git",
