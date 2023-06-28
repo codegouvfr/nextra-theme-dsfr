@@ -2,10 +2,7 @@ import { execSync } from "child_process";
 import { join as pathJoin, relative as pathRelative } from "path";
 import * as fs from "fs";
 
-const singletonDependencies: string[] = [
-    //"react",
-    //"@types/react"
-];
+const singletonDependencies: string[] = ["react", "@types/react", "@codegouvfr/react-dsfr", "tss-react"];
 
 const rootDirPath = pathJoin(__dirname, "..");
 
@@ -53,7 +50,7 @@ const commonThirdPartyDeps = (() => {
     // For example [ "@emotion" ] it's more convenient than
     // having to list every sub emotion packages (@emotion/css @emotion/utils ...)
     // in singletonDependencies
-    const namespaceSingletonDependencies: string[] = [];
+    const namespaceSingletonDependencies: string[] = ["@emotion", "@mui"];
 
     return [
         ...namespaceSingletonDependencies

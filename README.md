@@ -27,19 +27,7 @@
 # Install / Import
 
 ```bash
-$ npm install --save nextra-theme-dsfr-docs
-```
-
-```typescript
-import { myFunction, myObject, MyReactComponent } from "nextra-theme-dsfr-docs";
-```
-
-Specific imports, only import what you need:
-
-```typescript
-import { myFunction } from "nextra-theme-dsfr-docs/myFunction";
-import { myObject } from "nextra-theme-dsfr-docs/myObject";
-import MyReactComponent from "nextra-theme-dsfr-docs/MyReactComponent";
+$ yarn add nextra-theme-dsfr-docs @codegouvfr/react-dsfr @mui/material @emotion/styled @emotion/react @emotion/server
 ```
 
 # Contributing
@@ -53,26 +41,26 @@ Assuming `you/my-app` have `nextra-theme-dsfr-docs` as a dependency.
 
 ```bash
 cd ~/github
-git clone https://github.com/you/my-app
-cd my-app
+git clone https://github.com/codegouvfr/nextra-dsfr-demo
+cd nextra-dsfr-demo
 yarn
 
 cd ~/github
-git clone https://github.com/garronej/nextra-theme-dsfr-docs
+git clone https://github.com/codegouvfr/nextra-theme-dsfr-docs
 cd nextra-theme-dsfr-docs
 yarn
 yarn build
-yarn link-in-app my-app
+yarn link-in-app nextra-dsfr-demo
 npx tsc -w
 
 # Open another terminal
 
-cd ~/github/my-app
+cd ~/github/nextra-dsfr-demo
 rm -rf node_modules/.cache
 yarn start # Or whatever my-app is using for starting the project
 ```
 
-You don't have to use `~/github` as reference path. Just make sure `my-app` and `nextra-theme-dsfr-docs`
+You don't have to use `~/github` as reference path. Just make sure `nextra-dsfr-demo` and `nextra-theme-dsfr-docs`
 are in the same directory.
 
 > Note for the maintainer: You might run into issues if you do not list all your singleton dependencies in

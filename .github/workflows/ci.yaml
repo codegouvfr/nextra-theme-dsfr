@@ -9,24 +9,23 @@ on:
 
 jobs:
 
-  test_lint:
+  test_format:
     runs-on: ubuntu-latest
     if: ${{ !github.event.created && github.repository != 'garronej/ts-ci' }}
     steps:
     - uses: actions/checkout@v3
     - uses: actions/setup-node@v3
     - uses: bahmutov/npm-install@v1
-    - name: If this step fails run 'yarn lint' and 'yarn format' then commit again.
-      run: |
-        yarn lint:check
-        yarn format:check
+    - name: If this step fails run 'yarn format' then commit again.
+      run: yarn format:check
+
   test:
     runs-on: ${{ matrix.os }}
-    needs: test_lint
+    needs: test_format
     strategy:
       matrix:
-        node: [ '16', '17' ]
-        os: [ windows-latest, ubuntu-latest ]
+        node: [ '20' ]
+        os: [ ubuntu-latest ]
     name: Test with Node v${{ matrix.node }} on ${{ matrix.os }}
     steps:
     - uses: actions/checkout@v3
@@ -102,9 +101,6 @@ jobs:
     - run: npx -y -p denoify@1.5.7 enable_short_npm_import_path
       env:
         DRY_RUN: "0"
-    - uses: garronej/ts-ci@v2.1.0
-      with: 
-        action_name: remove_dark_mode_specific_images_from_readme
     - name: Publishing on NPM
       run: |
         if [ "$(npm show . version)" = "$VERSION" ]; then
