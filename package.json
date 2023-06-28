@@ -1,10 +1,10 @@
 {
-    "name": "nextra-theme-dsfr-docs",
+    "name": "@codegouvfr/nextra-theme-dsfr",
     "version": "0.0.1",
     "description": "DSFR theme for Nextra",
     "repository": {
         "type": "git",
-        "url": "git://github.com/codegouvfr/nextra-theme-dsfr-docs.git"
+        "url": "git://github.com/codegouvfr/nextra-theme-dsfr.git"
     },
     "scripts": {
         "build": "tsc",

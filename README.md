@@ -5,29 +5,29 @@
     <i>DSFR theme for Nextra</i>
     <br>
     <br>
-    <a href="https://github.com/codegouvfr/nextra-theme-dsfr-docs/actions">
-      <img src="https://github.com/codegouvfr/nextra-theme-dsfr-docs/workflows/ci/badge.svg?branch=main">
+    <a href="https://github.com/codegouvfr/nextra-theme-dsfr/actions">
+      <img src="https://github.com/codegouvfr/nextra-theme-dsfr/workflows/ci/badge.svg?branch=main">
     </a>
-    <a href="https://bundlephobia.com/package/nextra-theme-dsfr-docs">
-      <img src="https://img.shields.io/bundlephobia/minzip/nextra-theme-dsfr-docs">
+    <a href="https://bundlephobia.com/package/nextra-theme-dsfr">
+      <img src="https://img.shields.io/bundlephobia/minzip/nextra-theme-dsfr">
     </a>
-    <a href="https://www.npmjs.com/package/nextra-theme-dsfr-docs">
-      <img src="https://img.shields.io/npm/dw/nextra-theme-dsfr-docs">
+    <a href="https://www.npmjs.com/package/nextra-theme-dsfr">
+      <img src="https://img.shields.io/npm/dw/nextra-theme-dsfr">
     </a>
-    <a href="https://github.com/codegouvfr/nextra-theme-dsfr-docs/blob/main/LICENSE">
-      <img src="https://img.shields.io/npm/l/nextra-theme-dsfr-docs">
+    <a href="https://github.com/codegouvfr/nextra-theme-dsfr/blob/main/LICENSE">
+      <img src="https://img.shields.io/npm/l/nextra-theme-dsfr">
     </a>
 </p>
 <p align="center">
-  <a href="https://github.com/codegouvfr/nextra-theme-dsfr-docs">Home</a>
+  <a href="https://github.com/codegouvfr/nextra-theme-dsfr">Home</a>
   -
-  <a href="https://github.com/codegouvfr/nextra-theme-dsfr-docs">Documentation</a>
+  <a href="https://github.com/codegouvfr/nextra-theme-dsfr">Documentation</a>
 </p>
 
 # Install / Import
 
 ```bash
-$ yarn add nextra-theme-dsfr-docs @codegouvfr/react-dsfr @mui/material @emotion/styled @emotion/react @emotion/server
+$ yarn add @codegouvfr/nextra-theme-dsfr @codegouvfr/react-dsfr @mui/material @emotion/styled @emotion/react @emotion/server
 ```
 
 # Contributing
@@ -44,8 +44,8 @@ cd nextra-dsfr-demo
 yarn
 
 cd ~/github
-git clone https://github.com/codegouvfr/nextra-theme-dsfr-docs
-cd nextra-theme-dsfr-docs
+git clone https://github.com/codegouvfr/nextra-theme-dsfr
+cd nextra-theme-dsfr
 yarn
 yarn build
 yarn link-in-app nextra-dsfr-demo
@@ -58,7 +58,7 @@ rm -rf node_modules/.cache
 yarn start # Or whatever my-app is using for starting the project
 ```
 
-You don't have to use `~/github` as reference path. Just make sure `nextra-dsfr-demo` and `nextra-theme-dsfr-docs`
+You don't have to use `~/github` as reference path. Just make sure `nextra-dsfr-demo` and `nextra-theme-dsfr`
 are in the same directory.
 
 > Note for the maintainer: You might run into issues if you do not list all your singleton dependencies in
