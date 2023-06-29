@@ -3,7 +3,7 @@
         "module": "ES6",
         "target": "es5",
         "moduleResolution": "node",
-        "lib": ["es2015", "DOM", "ES2019.Object"],
+        "lib": ["es2021", "DOM"],
         "esModuleInterop": true,
         "declaration": true,
         // Do not change or the linking script will stop working
@@ -17,7 +17,8 @@
         "downlevelIteration": true,
         "jsx": "react-jsx",
         "noFallthroughCasesInSwitch": true,
-        "skipLibCheck": true
+        "skipLibCheck": true,
+        "resolveJsonModule": true
     },
     "include": ["src"]
 }
