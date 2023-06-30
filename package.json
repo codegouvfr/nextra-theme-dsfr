@@ -47,6 +47,7 @@
         "react-dom": ">=16.13.1"
     },
     "dependencies": {
+        "tsafe": "^1.6.4",
         "@headlessui/react": "1.7.10",
         "flexsearch": "0.7.21",
         "git-url-parse": "^13.1.0",

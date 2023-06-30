@@ -153,7 +153,14 @@ const InnerLayout = ({
         // This makes sure that selectors like `[dir=ltr] .nextra-container` work
         // before hydration as Tailwind expects the `dir` attribute to exist on the
         // `html` element.
-        <div dir={direction}>
+        <div
+            dir={direction}
+            style={{
+                minHeight: "100vh",
+                display: "flex",
+                flexDirection: "column"
+            }}
+        >
             <script
                 dangerouslySetInnerHTML={{
                     __html: `document.documentElement.setAttribute('dir','${direction}')`
@@ -214,8 +221,6 @@ const InnerLayout = ({
 };
 
 export default function Layout({ children, ...context }: NextraThemeLayoutProps): ReactElement {
-    console.log(context);
-
     return (
         <ConfigProvider value={context}>
             <InnerLayout {...context.pageOpts}>{children}</InnerLayout>

@@ -14,7 +14,7 @@ import type { TOCProps } from "./components/toc";
 import { useConfig } from "./contexts";
 import { getGitIssueUrl, useGitEditUrl } from "./utils";
 
-export const DEFAULT_LOCALE = "en-US";
+export const DEFAULT_LOCALE = "fr";
 
 export const IS_BROWSER = typeof window !== "undefined";
 
@@ -78,8 +78,6 @@ export const themeSchema = z.strictObject({
     gitTimestamp: z.custom<ReactNode | FC<{ timestamp: Date }>>(...reactNode),
     head: z.custom<ReactNode | FC>(...reactNode),
     i18n: i18nSchema,
-    logo: z.custom<ReactNode | FC>(...reactNode),
-    logoLink: z.boolean().or(z.string()),
     main: z.custom<FC<{ children: ReactNode }>>(...fc).optional(),
     navbar: z.strictObject({
         component: z.custom<ReactNode | FC<NavBarProps>>(...reactNode),
@@ -240,15 +238,6 @@ export const DEFAULT_THEME: DocsThemeConfig = {
         </>
     ),
     i18n: [],
-    logo: (
-        <>
-            <span className="nx-font-extrabold">Nextra</span>
-            <span className="nx-ml-2 nx-hidden nx-font-normal nx-text-gray-600 md:nx-inline">
-                The Next Docs Builder
-            </span>
-        </>
-    ),
-    logoLink: true,
     navbar: {
         component: Navbar
     },
