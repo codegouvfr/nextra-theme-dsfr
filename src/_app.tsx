@@ -2,8 +2,8 @@ import type { AppProps } from "next/app";
 import { createNextDsfrIntegrationApi } from "@codegouvfr/react-dsfr/next-pagesdir";
 import { createEmotionSsrAdvancedApproach } from "tss-react/next/pagesDir";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
-// Only in TypeScript projects
 declare module "@codegouvfr/react-dsfr/next-pagesdir" {
     interface RegisterLink {
         Link: typeof Link;
@@ -11,8 +11,13 @@ declare module "@codegouvfr/react-dsfr/next-pagesdir" {
 }
 
 const { withDsfr, dsfrDocumentApi } = createNextDsfrIntegrationApi({
-    defaultColorScheme: "system",
-    Link
+    "defaultColorScheme": "system",
+    Link,
+    "useLang": () => {
+        const { locale = "fr" } = useRouter();
+
+        return locale;
+    }
 });
 
 export { dsfrDocumentApi };
