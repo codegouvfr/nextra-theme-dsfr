@@ -7,7 +7,7 @@ import type { SearchResult } from "../types";
 import { HighlightMatches } from "./highlight-matches";
 import { Search } from "./search";
 import { fr } from "@codegouvfr/react-dsfr";
-import { useStyles } from "tss-react/dsfr";
+import { makeStyles } from "tss-react/dsfr";
 
 type SectionIndex = FlexSearch.Document<
     {
@@ -151,7 +151,7 @@ export function Flexsearch({ className }: { className?: string }): ReactElement 
     const [results, setResults] = useState<SearchResult[]>([]);
     const [search, setSearch] = useState("");
 
-    const { css, cx } = useStyles();
+    const { classes, cx } = useStyles();
 
     const doSearch = (search: string) => {
         if (!search) return;
@@ -200,25 +200,11 @@ export function Flexsearch({ className }: { className?: string }): ReactElement 
                     prefix: isFirstItemOfPage && result.doc.title,
                     children: (
                         <div>
-                            <span
-                                className={cx(
-                                    fr.cx("fr-text--lead"),
-                                    css({
-                                        "display": "block",
-                                        "marginBottom": fr.spacing("2v"),
-                                        "marginTop": fr.spacing("1v")
-                                    })
-                                )}
-                            >
+                            <span className={cx(fr.cx("fr-text--lead"), classes.resultTitle)}>
                                 <HighlightMatches match={search} value={title} />
                             </span>
                             {content && (
-                                <span
-                                    className={css({
-                                        "display": "block",
-                                        "marginBottom": fr.spacing("2v")
-                                    })}
-                                >
+                                <span className={classes.resultContent}>
                                     <HighlightMatches match={search} value={content} />
                                 </span>
                             )}
@@ -287,6 +273,7 @@ export function Flexsearch({ className }: { className?: string }): ReactElement 
             loading={loading}
             error={error}
             value={search}
+            overlayClassName={classes.overlayClassName}
             onChange={handleChange}
             onActive={preload}
             className={className}
@@ -294,3 +281,20 @@ export function Flexsearch({ className }: { className?: string }): ReactElement 
         />
     );
 }
+
+const useStyles = makeStyles<void, "resultTitle">()((...[, , classes]) => ({
+    "overlayClassName": {
+        [`& .Mui-focused .${classes.resultTitle}`]: {
+            "color": fr.getColors(true).decisions.text.active.blueFrance.default
+        }
+    },
+    "resultTitle": {
+        "display": "block",
+        "marginBottom": fr.spacing("2v"),
+        "marginTop": fr.spacing("1v")
+    },
+    "resultContent": {
+        "display": "block",
+        "marginBottom": fr.spacing("2v")
+    }
+}));

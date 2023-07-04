@@ -65,6 +65,11 @@ export function Search(props: SearchProps) {
                             [fr.breakpoints.down("lg")]: {
                                 "width": "calc(100vw - 3rem)"
                             }
+                            /*
+                            "& .Mui-focused": {
+                                "border": "1px solid red"
+                            }
+                            */
                         }),
                         overlayClassName
                     )}

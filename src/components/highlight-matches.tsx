@@ -1,5 +1,6 @@
 import { Fragment, memo } from "react";
 import { useStyles } from "tss-react/dsfr";
+import { fr } from "@codegouvfr/react-dsfr";
 
 type MatchArgs = {
     value?: string;
@@ -15,7 +16,7 @@ export const HighlightMatches = memo<MatchArgs>(function HighlightMatches({ valu
     let index = 0;
     const res = [];
 
-    const { css, theme } = useStyles();
+    const { css } = useStyles();
 
     if (value) {
         while ((result = regexp.exec(value)) !== null) {
@@ -24,7 +25,7 @@ export const HighlightMatches = memo<MatchArgs>(function HighlightMatches({ valu
                     {splitText.splice(0, result.index - index).join("")}
                     <span
                         className={css({
-                            "color": theme.decisions.text.active.blueFrance.default
+                            "color": fr.getColors(true).decisions.text.active.blueFrance.default
                         })}
                     >
                         {splitText.splice(0, regexp.lastIndex - result.index).join("")}
