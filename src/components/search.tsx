@@ -31,12 +31,7 @@ export function Search(props: SearchProps): ReactElement {
         results
     } = props;
 
-    const nativeInputProps = useContext(nativeInputPropsContext) ?? {
-        "className": "",
-        "id": "",
-        "placeholder": "",
-        "type": "search"
-    };
+    const nativeInputProps = useContext(nativeInputPropsContext);
 
     assert(nativeInputProps !== undefined, "nativeInputProps must be defined by providing a context");
 
