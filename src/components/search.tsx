@@ -1,12 +1,11 @@
-import { createContext, useContext } from "react";
+import { createContext, useContext, useState, useRef, type ReactNode } from "react";
 import { useRouter } from "next/router";
-import type { ReactElement } from "react";
-import { Fragment } from "react";
 import type { SearchResult } from "../types";
 import { useStyles } from "tss-react/dsfr";
 import { assert } from "tsafe/assert";
 import Autocomplete from "@mui/material/Autocomplete";
 import { fr } from "@codegouvfr/react-dsfr";
+import Popper from "@mui/material/Popper";
 
 type SearchProps = {
     className?: string;
@@ -19,13 +18,13 @@ type SearchProps = {
     results: SearchResult[];
 };
 
-export function Search(props: SearchProps): ReactElement {
+export function Search(props: SearchProps) {
     const {
         className,
-        //overlayClassName,
+        overlayClassName,
         //value,
         onChange,
-        onActive,
+        //onActive,
         loading,
         //error,
         results
@@ -35,7 +34,7 @@ export function Search(props: SearchProps): ReactElement {
 
     assert(nativeInputProps !== undefined, "nativeInputProps must be defined by providing a context");
 
-    const { css, cx, theme } = useStyles();
+    const { css, cx } = useStyles();
 
     const router = useRouter();
 
@@ -45,59 +44,80 @@ export function Search(props: SearchProps): ReactElement {
         return result;
     };
 
+    const [isOpen, setIsOpen] = useState(false);
+
+    const valueRef = useRef(props.value);
+
     return (
         <Autocomplete
-            className={cx(css({ "width": "100%" }), className)}
-            onInputChange={(...[, newValue]) => onChange(newValue)}
-            // NOTE: Just in case the user click outside of the Link
+            PopperComponent={props => (
+                <Popper
+                    {...props}
+                    style={{
+                        ...props.style,
+                        "width": undefined
+                    }}
+                    className={cx(
+                        props.className,
+                        css({
+                            "zIndex": 100000,
+                            "width": "40em",
+                            [fr.breakpoints.down("lg")]: {
+                                "width": "calc(100vw - 3rem)"
+                            }
+                        }),
+                        overlayClassName
+                    )}
+                    placement="bottom-start"
+                />
+            )}
+            className={className}
+            fullWidth
+            onInputChange={(...[, newValue]) => {
+                valueRef.current = newValue;
+                onChange(newValue);
+                if (newValue === "") {
+                    setIsOpen(false);
+                }
+            }}
+            blurOnSelect
             onChange={(...[, id]) => {
                 if (id === null) {
                     return;
                 }
                 router.push(getResult(id).route);
-
-                const inputElement = document.getElementById(nativeInputProps.id);
-
-                assert(inputElement !== null);
-
-                inputElement.blur();
             }}
             value={null}
             options={results.map(result => result.id)}
             filterOptions={ids => ids} // No filtering
             getOptionLabel={() => ""}
-            renderOption={(liProps, id) => {
-                const { prefix, children } = getResult(id);
+            // @ts-expect-error: We return a ReactNode instead of a string
+            // but it's okay as long as we always return the same object reference
+            // for a given group.
+            groupBy={id => {
+                const index = results.findIndex(result => result.id === id);
 
-                return (
-                    <Fragment key={id}>
-                        {prefix && (
-                            <div
-                                style={{
-                                    ...fr.spacing("padding", {
-                                        "topBottom": "2v",
-                                        "rightLeft": "4v"
-                                    }),
-                                    "marginBottom": fr.spacing("2v"),
-                                    "borderBottom": `1px solid ${theme.decisions.border.actionHigh.grey.default}`
-                                }}
-                            >
-                                <span
-                                    className={cx(
-                                        fr.cx("fr-text--lg"),
-                                        css({
-                                            "color": theme.decisions.text.title.grey.default
-                                        })
-                                    )}
-                                >
-                                    {prefix}
-                                </span>
-                            </div>
-                        )}
-                        <li {...liProps}>{children}</li>
-                    </Fragment>
-                );
+                const getPrefix = (index: number): ReactNode => {
+                    const result = results[index];
+
+                    if (result.prefix !== undefined) {
+                        return result.prefix;
+                    }
+
+                    if (index === 0) {
+                        return "";
+                    }
+
+                    return getPrefix(index - 1);
+                };
+
+                return getPrefix(index);
             }}
+            renderOption={(liProps, id) => (
+                <li {...liProps} id={id} key={id}>
+                    {getResult(id).children}
+                </li>
+            )}
             noOptionsText={"no result"}
             loadingText={"loading"}
             loading={loading}
@@ -116,8 +136,17 @@ export function Search(props: SearchProps): ReactElement {
                     />
                 </div>
             )}
-            onOpen={() => onActive?.(true)}
-            onClose={() => onActive?.(false)}
+            open={isOpen}
+            onOpen={() => {
+                const value = valueRef.current;
+
+                if (value === "") {
+                    return;
+                }
+
+                setIsOpen(true);
+            }}
+            onClose={() => setIsOpen(false)}
         />
     );
 }
@@ -132,7 +161,7 @@ export type NativeInputProps = {
 const nativeInputPropsContext = createContext<NativeInputProps | undefined>(undefined);
 
 export function NativeInputPropsProvider(props: {
-    children: ReactElement;
+    children: ReactNode;
     nativeInputProps: NativeInputProps;
 }) {
     const { nativeInputProps, children } = props;
