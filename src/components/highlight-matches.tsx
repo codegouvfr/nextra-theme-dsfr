@@ -1,4 +1,5 @@
 import { Fragment, memo } from "react";
+import { useStyles } from "tss-react/dsfr";
 
 type MatchArgs = {
     value?: string;
@@ -14,12 +15,18 @@ export const HighlightMatches = memo<MatchArgs>(function HighlightMatches({ valu
     let index = 0;
     const res = [];
 
+    const { css, theme } = useStyles();
+
     if (value) {
         while ((result = regexp.exec(value)) !== null) {
             res.push(
                 <Fragment key={id++}>
                     {splitText.splice(0, result.index - index).join("")}
-                    <span className="nx-text-primary-600">
+                    <span
+                        className={css({
+                            "color": theme.decisions.text.active.blueFrance.default
+                        })}
+                    >
                         {splitText.splice(0, regexp.lastIndex - result.index).join("")}
                     </span>
                 </Fragment>
