@@ -11,6 +11,7 @@ import { Header } from "@codegouvfr/react-dsfr/Header";
 import { exclude } from "tsafe/exclude";
 import { id } from "tsafe/id";
 import type { MainNavigationProps } from "@codegouvfr/react-dsfr/MainNavigation";
+import { headerFooterDisplayItem } from "@codegouvfr/react-dsfr/Display";
 import { NativeInputPropsProvider } from "./search";
 
 export type NavBarProps = {
@@ -198,22 +199,7 @@ export function Navbar({ flatDirectories, items }: NavBarProps): ReactElement {
                 }}
                 serviceTagline="baseline - précisions sur l'organisation"
                 serviceTitle="Nom du site / service"
-                quickAccessItems={[
-                    {
-                        iconId: "fr-icon-add-circle-line",
-                        linkProps: {
-                            href: "#"
-                        },
-                        text: "Créer un espace"
-                    },
-                    {
-                        iconId: "ri-account-circle-line",
-                        linkProps: {
-                            href: "#"
-                        },
-                        text: "S’enregistrer"
-                    }
-                ]}
+                quickAccessItems={[headerFooterDisplayItem]}
                 renderSearchInput={params => {
                     const { className, id, placeholder, type } = params;
 

@@ -1,4 +1,3 @@
-import cn from "clsx";
 import FlexSearch from "flexsearch";
 import { useRouter } from "next/router";
 import type { ReactElement, ReactNode } from "react";
@@ -7,6 +6,8 @@ import { DEFAULT_LOCALE } from "../constants";
 import type { SearchResult } from "../types";
 import { HighlightMatches } from "./highlight-matches";
 import { Search } from "./search";
+import { fr } from "@codegouvfr/react-dsfr";
+import { useStyles } from "tss-react/dsfr";
 
 type SectionIndex = FlexSearch.Document<
     {
@@ -62,11 +63,7 @@ const loadIndexes = (basePath: string, locale: string): Promise<void> => {
 };
 
 const loadIndexesImpl = async (basePath: string, locale: string): Promise<void> => {
-    console.log("before");
-
     const response = await fetch(`${basePath}/_next/static/chunks/nextra-data-${locale}.json`);
-
-    console.log({ response });
 
     const data = (await response.json()) as NextraData;
 
@@ -154,16 +151,12 @@ export function Flexsearch({ className }: { className?: string }): ReactElement 
     const [results, setResults] = useState<SearchResult[]>([]);
     const [search, setSearch] = useState("");
 
+    const { css, cx } = useStyles();
+
     const doSearch = (search: string) => {
         if (!search) return;
 
-        console.log("start!");
-
-        console.log({ locale, indexes });
-
         const [pageIndex, sectionIndex] = indexes[locale];
-
-        console.log("here?");
 
         // Show the results for the top 5 pages
         const pageResults =
@@ -174,8 +167,6 @@ export function Flexsearch({ className }: { className?: string }): ReactElement 
 
         const results: Result[] = [];
         const pageTitleMatches: Record<number, number> = {};
-
-        console.log("still going");
 
         for (let i = 0; i < pageResults.length; i++) {
             const result = pageResults[i];
@@ -208,23 +199,35 @@ export function Flexsearch({ className }: { className?: string }): ReactElement 
                     route: url,
                     prefix: isFirstItemOfPage && result.doc.title,
                     children: (
-                        <>
-                            <div className="nx-text-base nx-font-semibold nx-leading-5">
+                        <div>
+                            <span
+                                className={cx(
+                                    fr.cx("fr-text--lead"),
+                                    css({
+                                        "display": "block",
+                                        "marginBottom": fr.spacing("2v"),
+                                        "marginTop": fr.spacing("1v")
+                                    })
+                                )}
+                            >
                                 <HighlightMatches match={search} value={title} />
-                            </div>
+                            </span>
                             {content && (
-                                <div className="excerpt nx-mt-1 nx-text-sm nx-leading-[1.35rem] nx-text-gray-600 dark:nx-text-gray-400 contrast-more:dark:nx-text-gray-50">
+                                <span
+                                    className={css({
+                                        "display": "block",
+                                        "marginBottom": fr.spacing("2v")
+                                    })}
+                                >
                                     <HighlightMatches match={search} value={content} />
-                                </div>
+                                </span>
                             )}
-                        </>
+                        </div>
                     )
                 });
                 isFirstItemOfPage = false;
             }
         }
-
-        console.log("end");
 
         setResults(
             results
