@@ -47,6 +47,7 @@ export function Search(props: SearchProps): ReactElement {
 
     return (
         <Autocomplete
+            open={true}
             className={cx(css({ "width": "100%" }), className)}
             onInputChange={(...[, newValue]) => onChange(newValue)}
             // NOTE: Just in case the user click outside of the Link
