@@ -55,7 +55,7 @@ npx tsc -w
 
 cd ~/github/nextra-dsfr-demo
 rm -rf node_modules/.cache
-yarn start # Or whatever my-app is using for starting the project
+yarn dev # Or whatever my-app is using for starting the project
 ```
 
 You don't have to use `~/github` as reference path. Just make sure `nextra-dsfr-demo` and `nextra-theme-dsfr`
