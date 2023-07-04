@@ -70,3 +70,8 @@ For publishing a release candidate update your `package.json` with `1.3.4-rc.0` 
 It also work if you do it from a branch that have an open PR on main.
 
 > Make sure your have defined the `NPM_TOKEN` repository secret or NPM publishing will fail.
+
+# Maintainers
+
+-   [Joseph Garrone](@garronej)
+-   [Dylan DECRULLE](@ddecrulle) - Insee
