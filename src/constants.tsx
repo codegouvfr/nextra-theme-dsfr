@@ -14,7 +14,7 @@ import type { TOCProps } from "./components/toc";
 import { useConfig } from "./contexts";
 import { getGitIssueUrl, useGitEditUrl } from "./utils";
 
-export const DEFAULT_LOCALE = "fr";
+export const DEFAULT_LOCALE = "en-US";
 
 export const IS_BROWSER = typeof window !== "undefined";
 

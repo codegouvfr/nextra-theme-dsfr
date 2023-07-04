@@ -14,7 +14,7 @@ const { withDsfr, dsfrDocumentApi } = createNextDsfrIntegrationApi({
     "defaultColorScheme": "system",
     Link,
     "useLang": () => {
-        const { locale = "fr" } = useRouter();
+        const { locale = "en-US" } = useRouter();
 
         return locale;
     }

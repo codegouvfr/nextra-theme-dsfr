@@ -62,7 +62,12 @@ const loadIndexes = (basePath: string, locale: string): Promise<void> => {
 };
 
 const loadIndexesImpl = async (basePath: string, locale: string): Promise<void> => {
+    console.log("before");
+
     const response = await fetch(`${basePath}/_next/static/chunks/nextra-data-${locale}.json`);
+
+    console.log({ response });
+
     const data = (await response.json()) as NextraData;
 
     const pageIndex: PageIndex = new FlexSearch.Document({
@@ -151,7 +156,14 @@ export function Flexsearch({ className }: { className?: string }): ReactElement 
 
     const doSearch = (search: string) => {
         if (!search) return;
+
+        console.log("start!");
+
+        console.log({ locale, indexes });
+
         const [pageIndex, sectionIndex] = indexes[locale];
+
+        console.log("here?");
 
         // Show the results for the top 5 pages
         const pageResults =
@@ -162,6 +174,8 @@ export function Flexsearch({ className }: { className?: string }): ReactElement 
 
         const results: Result[] = [];
         const pageTitleMatches: Record<number, number> = {};
+
+        console.log("still going");
 
         for (let i = 0; i < pageResults.length; i++) {
             const result = pageResults[i];
@@ -218,6 +232,8 @@ export function Flexsearch({ className }: { className?: string }): ReactElement 
                 isFirstItemOfPage = false;
             }
         }
+
+        console.log("end");
 
         setResults(
             results

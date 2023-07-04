@@ -11,6 +11,7 @@ import { Header } from "@codegouvfr/react-dsfr/Header";
 import { exclude } from "tsafe/exclude";
 import { id } from "tsafe/id";
 import type { MainNavigationProps } from "@codegouvfr/react-dsfr/MainNavigation";
+import { NativeInputPropsProvider } from "./search";
 
 export type NavBarProps = {
     flatDirectories: Item[];
@@ -84,8 +85,6 @@ export function Navbar({ flatDirectories, items }: NavBarProps): ReactElement {
     const activeRoute = useFSRoute();
     const { menu, setMenu } = useMenu();
 
-    console.log({ items });
-
     return (
         <>
             <div className="nextra-nav-container nx-sticky nx-top-0 nx-z-20 nx-w-full nx-bg-transparent print:nx-hidden">
@@ -156,10 +155,10 @@ export function Navbar({ flatDirectories, items }: NavBarProps): ReactElement {
                         );
                     })}
 
-                    {renderComponent(config.search.component, {
+                    {/*renderComponent(config.search.component, {
                         directories: flatDirectories,
                         className: "nx-hidden md:nx-inline-block mx-min-w-[200px]"
-                    })}
+                    })*/}
 
                     {config.project.link ? (
                         <Anchor className="nx-p-2 nx-text-current" href={config.project.link} newWindow>
@@ -215,7 +214,27 @@ export function Navbar({ flatDirectories, items }: NavBarProps): ReactElement {
                         text: "S’enregistrer"
                     }
                 ]}
-                renderSearchInput={params => <input {...params} />}
+                renderSearchInput={params => {
+                    const { className, id, placeholder, type } = params;
+
+                    return (
+                        <NativeInputPropsProvider
+                            nativeInputProps={{
+                                className,
+                                id,
+                                placeholder,
+                                type
+                            }}
+                        >
+                            <>
+                                {renderComponent(config.search.component, {
+                                    directories: flatDirectories,
+                                    className: "nx-hidden md:nx-inline-block mx-min-w-[200px]"
+                                })}
+                            </>
+                        </NativeInputPropsProvider>
+                    );
+                }}
                 navigation={items
                     .map(pageOrMenu => {
                         if (pageOrMenu.display === "hidden") {
