@@ -24,7 +24,7 @@ export function Search(props: SearchProps) {
         overlayClassName,
         //value,
         onChange,
-        //onActive,
+        onActive,
         loading,
         //error,
         results
@@ -100,7 +100,7 @@ export function Search(props: SearchProps) {
                 const getPrefix = (index: number): ReactNode => {
                     const result = results[index];
 
-                    if (result.prefix !== undefined) {
+                    if (result.prefix) {
                         return result.prefix;
                     }
 
@@ -123,6 +123,8 @@ export function Search(props: SearchProps) {
             loading={loading}
             selectOnFocus
             clearOnBlur
+            onFocus={() => onActive?.(true)}
+            onBlur={() => onActive?.(false)}
             handleHomeEndKeys
             isOptionEqualToValue={() => false}
             renderInput={params => (
