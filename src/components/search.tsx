@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useRef, useEffect, type ReactNode } from "react";
+import { createContext, useContext, useState, useRef, type ReactNode } from "react";
 import { useRouter } from "next/router";
 import type { SearchResult } from "../types";
 import { useStyles } from "tss-react/dsfr";
@@ -44,26 +44,6 @@ export function Search(props: SearchProps) {
         return result;
     };
 
-    const Option = function (props: { liProps: any; id: string }) {
-        const { id, liProps } = props;
-
-        const [className, setClassName] = useState("");
-
-        const result = getResult(id);
-
-        useEffect(() => {
-            if (results.indexOf(result) === 0) {
-                setClassName(cx("Mui-focused"));
-            }
-        }, []);
-
-        return (
-            <li {...liProps} id={id} key={id} className={cx(liProps.className, className)}>
-                {result.children}
-            </li>
-        );
-    };
-
     const [isOpen, setIsOpen] = useState(false);
 
     const valueRef = useRef(props.value);
@@ -85,11 +65,6 @@ export function Search(props: SearchProps) {
                             [fr.breakpoints.down("lg")]: {
                                 "width": "calc(100vw - 3rem)"
                             }
-                            /*
-                            "& .Mui-focused": {
-                                "border": "1px solid red"
-                            }
-                            */
                         }),
                         overlayClassName
                     )}
@@ -138,7 +113,11 @@ export function Search(props: SearchProps) {
 
                 return getPrefix(index);
             }}
-            renderOption={(liProps, id) => <Option liProps={liProps} id={id} />}
+            renderOption={(liProps, id) => (
+                <li {...liProps} id={id} key={id}>
+                    {getResult(id).children}
+                </li>
+            )}
             noOptionsText={"no result"}
             loadingText={"loading"}
             loading={loading}
