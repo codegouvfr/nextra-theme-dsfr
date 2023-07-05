@@ -1,13 +1,17 @@
 import { Fragment, memo } from "react";
 import { useStyles } from "tss-react/dsfr";
-import { fr } from "@codegouvfr/react-dsfr";
 
 type MatchArgs = {
     value?: string;
     match: string;
+    bold?: boolean;
 };
 
-export const HighlightMatches = memo<MatchArgs>(function HighlightMatches({ value, match }: MatchArgs) {
+export const HighlightMatches = memo<MatchArgs>(function HighlightMatches({
+    value,
+    match,
+    bold = false
+}: MatchArgs) {
     const splitText = value ? value.split("") : [];
     const escapedSearch = match.trim().replace(/[|\\{}()[\]^$+*?.]/g, "\\$&");
     const regexp = RegExp("(" + escapedSearch.replaceAll(" ", "|") + ")", "ig");
@@ -16,7 +20,7 @@ export const HighlightMatches = memo<MatchArgs>(function HighlightMatches({ valu
     let index = 0;
     const res = [];
 
-    const { css } = useStyles();
+    const { css, theme } = useStyles();
 
     if (value) {
         while ((result = regexp.exec(value)) !== null) {
@@ -25,7 +29,8 @@ export const HighlightMatches = memo<MatchArgs>(function HighlightMatches({ valu
                     {splitText.splice(0, result.index - index).join("")}
                     <span
                         className={css({
-                            "color": fr.getColors(true).decisions.text.active.blueFrance.default
+                            "color": theme.decisions.text.active.blueFrance.default,
+                            "fontWeight": bold ? "bold" : undefined
                         })}
                     >
                         {splitText.splice(0, regexp.lastIndex - result.index).join("")}

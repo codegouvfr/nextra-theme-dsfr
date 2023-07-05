@@ -205,7 +205,7 @@ export function Flexsearch({ className }: { className?: string }): ReactElement 
                             </span>
                             {content && (
                                 <span className={classes.resultContent}>
-                                    <HighlightMatches match={search} value={content} />
+                                    <HighlightMatches match={search} value={content} bold />
                                 </span>
                             )}
                         </div>
@@ -282,10 +282,10 @@ export function Flexsearch({ className }: { className?: string }): ReactElement 
     );
 }
 
-const useStyles = makeStyles<void, "resultTitle">()((...[, , classes]) => ({
+const useStyles = makeStyles<void, "resultTitle">()((...[theme, , classes]) => ({
     "overlayClassName": {
         [`& .Mui-focused .${classes.resultTitle}`]: {
-            "color": fr.getColors(true).decisions.text.active.blueFrance.default
+            "color": theme.decisions.text.active.blueFrance.default
         }
     },
     "resultTitle": {
@@ -295,6 +295,6 @@ const useStyles = makeStyles<void, "resultTitle">()((...[, , classes]) => ({
     },
     "resultContent": {
         "display": "block",
-        "marginBottom": fr.spacing("2v")
+        "marginBottom": fr.spacing("3v")
     }
 }));
