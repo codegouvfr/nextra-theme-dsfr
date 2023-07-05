@@ -50,6 +50,7 @@ export function Search(props: SearchProps) {
 
     return (
         <Autocomplete
+            freeSolo
             PopperComponent={props => (
                 <Popper
                     {...props}
@@ -121,8 +122,6 @@ export function Search(props: SearchProps) {
             noOptionsText={"no result"}
             loadingText={"loading"}
             loading={loading}
-            selectOnFocus
-            clearOnBlur
             onFocus={() => onActive?.(true)}
             onBlur={() => onActive?.(false)}
             handleHomeEndKeys
