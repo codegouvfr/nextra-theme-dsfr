@@ -58,7 +58,7 @@ rm -rf node_modules/.cache
 yarn dev # Or whatever my-app is using for starting the project
 ```
 
-You don't have to use `~/github` as reference path. Just make sure `nextra-dsfr-demo` and `nextra-theme-dsfr`
+You don't have to use `~/github` as a reference path. Just make sure `nextra-dsfr-demo` and `nextra-theme-dsfr`
 are in the same directory.
 
 ## Releasing
@@ -67,11 +67,12 @@ For releasing a new version on GitHub and NPM you don't need to create a tag.
 Just update the `package.json` version number and push.
 
 For publishing a release candidate update your `package.json` with `1.3.4-rc.0` (`.1`, `.2`, ...).  
-It also work if you do it from a branch that have an open PR on main.
+It also works if you do it from a branch that has an open PR on `main`.
 
-> Make sure your have defined the `NPM_TOKEN` repository secret or NPM publishing will fail.
+> Make sure you have defined the `NPM_TOKEN` repository secret or NPM publishing will fail.
 
-# Maintainers
+## Maintainers
 
--   [Joseph Garrone](@garronej)
--   [Dylan DECRULLE](@ddecrulle) - Insee
+-   [Joseph Garrone](https://github.com/garronej)
+-   [Dylan DECRULLE](https://github.com/ddecrulle) - Insee
+-   [Dimitri POSTOLOV](https://github.com/B2o5T) - Main [Nextra](https://nextra.site) maintainer
