@@ -36,7 +36,7 @@
     "keywords": [],
     "homepage": "https://github.com/garronej/update-ts-ci",
     "peerDependencies": {
-        "@codegouvfr/react-dsfr": "^0.66.3",
+        "@codegouvfr/react-dsfr": "^0.67.0",
         "@emotion/react": "^11.11.1",
         "@emotion/server": "^11.11.0",
         "@emotion/styled": "^11.11.0",
@@ -62,7 +62,7 @@
         "focus-visible": "^5.2.0"
     },
     "devDependencies": {
-        "@codegouvfr/react-dsfr": "^0.66.6",
+        "@codegouvfr/react-dsfr": "^0.67.0",
         "@emotion/react": "^11.11.1",
         "@emotion/server": "^11.11.0",
         "@emotion/styled": "^11.11.0",

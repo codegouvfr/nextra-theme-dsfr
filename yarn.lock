@@ -61,10 +61,10 @@
   resolved "https://registry.yarnpkg.com/@braintree/sanitize-url/-/sanitize-url-6.0.2.tgz#6110f918d273fe2af8ea1c4398a88774bb9fc12f"
   integrity sha512-Tbsj02wXCbqGmzdnXNk0SOF19ChhRU70BsroIi4Pm6Ehp56in6vch94mfbdQ17DozxkL3BAVjbZ4Qc1a0HFRAg==
 
-"@codegouvfr/react-dsfr@^0.66.6":
-  version "0.66.6"
-  resolved "https://registry.yarnpkg.com/@codegouvfr/react-dsfr/-/react-dsfr-0.66.6.tgz#e0c36fa5b62fe957e72f2e3be457d0a0bf509217"
-  integrity sha512-hCQlwBamnJzUYg02sVxTjvq1XjXpXBX01fLoldQu5mZhtvoiu0wpDb83Y5qH1u857ZmZplz+K4gzPoHf3ajALA==
+"@codegouvfr/react-dsfr@^0.67.0":
+  version "0.67.0"
+  resolved "https://registry.yarnpkg.com/@codegouvfr/react-dsfr/-/react-dsfr-0.67.0.tgz#e8b37c5e32c02bb32995c1143ff1791e0514027d"
+  integrity sha512-br21+RsUY+nbYRxWOM4JkygARmPFiSpes/waVyXnONBWkT/M217NHzYDhgEGp+tuM26wQtEZtnZ9B3una7mv8Q==
   dependencies:
     tsafe "^1.6.3"
 

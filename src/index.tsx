@@ -14,6 +14,8 @@ import { DEFAULT_LOCALE, PartialDocsThemeConfig } from "./constants";
 import { ActiveAnchorProvider, ConfigProvider, useConfig } from "./contexts";
 import { getComponents } from "./mdx-components";
 import { renderComponent } from "./utils";
+import { useStyles } from "tss-react/dsfr";
+import { fr } from "@codegouvfr/react-dsfr";
 
 interface BodyProps {
     themeContext: PageTheme;
@@ -149,6 +151,8 @@ const InnerLayout = ({
 
     const direction = isRTL ? "rtl" : "ltr";
 
+    const { css } = useStyles();
+
     return (
         // This makes sure that selectors like `[dir=ltr] .nextra-container` work
         // before hydration as Tailwind expects the `dir` attribute to exist on the
@@ -174,7 +178,13 @@ const InnerLayout = ({
                     items: topLevelNavbarItems
                 })}
             <div
-                className={cn("nx-mx-auto nx-flex", themeContext.layout !== "raw" && "nx-max-w-[90rem]")}
+                className={css({
+                    ...fr.spacing("margin", {
+                        "rightLeft": "auto"
+                    }),
+                    "display": "flex",
+                    "maxWith": themeContext.layout === "raw" ? undefined : "90rem"
+                })}
             >
                 <ActiveAnchorProvider>
                     <Sidebar
