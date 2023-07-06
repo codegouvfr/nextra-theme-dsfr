@@ -214,8 +214,7 @@ export function Navbar({ flatDirectories, items }: NavBarProps): ReactElement {
                         >
                             <>
                                 {renderComponent(config.search.component, {
-                                    directories: flatDirectories,
-                                    className: "nx-hidden md:nx-inline-block mx-min-w-[200px]"
+                                    "directories": flatDirectories
                                 })}
                             </>
                         </NativeInputPropsProvider>
