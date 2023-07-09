@@ -1,31 +1,23 @@
-import cn from "clsx";
-import type { ReactElement } from "react";
-import { useConfig } from "../contexts";
-import { renderComponent } from "../utils";
-import { LocaleSwitch } from "./locale-switch";
+import { Footer as DsfrFooter } from "@codegouvfr/react-dsfr/Footer";
+import { headerFooterDisplayItem } from "@codegouvfr/react-dsfr/Display";
 
-export function Footer({ menu }: { menu?: boolean }): ReactElement {
-    const config = useConfig();
+export function Footer() {
+    //const config = useConfig();
+    // {renderComponent(config.footer.text)}
+    // {config.i18n.length > 0 && <LocaleSwitch options={config.i18n} />}
+
     return (
-        <footer className="nx-bg-gray-100 nx-pb-[env(safe-area-inset-bottom)] dark:nx-bg-neutral-900 print:nx-bg-transparent">
-            <div
-                className={cn(
-                    "nx-mx-auto nx-flex nx-max-w-[90rem] nx-gap-2 nx-py-2 nx-px-4",
-                    menu && (config.i18n.length > 0 || config.darkMode) ? "nx-flex" : "nx-hidden"
-                )}
-            >
-                {config.i18n.length > 0 && <LocaleSwitch options={config.i18n} />}
-                {config.darkMode && renderComponent(config.themeSwitch.component)}
-            </div>
-            <hr className="dark:nx-border-neutral-800" />
-            <div
-                className={cn(
-                    "nx-mx-auto nx-flex nx-max-w-[90rem] nx-justify-center nx-py-12 nx-text-gray-600 dark:nx-text-gray-400 md:nx-justify-start",
-                    "nx-pl-[max(env(safe-area-inset-left),1.5rem)] nx-pr-[max(env(safe-area-inset-right),1.5rem)]"
-                )}
-            >
-                {renderComponent(config.footer.text)}
-            </div>
-        </footer>
+        <DsfrFooter
+            accessibility="partially compliant"
+            contentDescription="
+    Ce message est à remplacer par les informations de votre site.
+
+    Comme exemple de contenu, vous pouvez indiquer les informations 
+    suivantes : Le site officiel d’information administrative pour les entreprises.
+    Retrouvez toutes les informations et démarches administratives nécessaires à la création, 
+    à la gestion et au développement de votre entreprise.
+    "
+            bottomItems={[headerFooterDisplayItem]}
+        />
     );
 }
