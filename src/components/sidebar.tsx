@@ -12,6 +12,13 @@ import { renderComponent } from "../utils";
 import { Anchor } from "./anchor";
 import { Collapse } from "./collapse";
 import { LocaleSwitch } from "./locale-switch";
+import { SideMenu } from "@codegouvfr/react-dsfr/SideMenu";
+import type { SideMenuProps } from "@codegouvfr/react-dsfr/SideMenu";
+import { useStyles } from "tss-react/dsfr";
+import { id } from "tsafe/id";
+import { exclude } from "tsafe/exclude";
+import { is } from "tsafe/is";
+import { assert } from "tsafe/assert";
 
 const TreeState: Record<string, boolean> = Object.create(null);
 
@@ -271,8 +278,18 @@ interface MenuProps {
 }
 
 function Menu({ directories, anchors, className, onlyCurrentDocs }: MenuProps): ReactElement {
+    const { css } = useStyles();
+
     return (
-        <ul className={cn(classes.list, className)}>
+        <ul
+            className={cn(
+                classes.list,
+                className,
+                css({
+                    "border": "1px solid red"
+                })
+            )}
+        >
             {directories.map(item =>
                 !onlyCurrentDocs || item.isUnderCurrentDocsTree ? (
                     item.type === "menu" ||
@@ -352,6 +369,10 @@ export function Sidebar({
     const hasI18n = config.i18n.length > 0;
     const hasMenu = config.darkMode || hasI18n;
 
+    const { css, cx } = useStyles();
+
+    const route = useFSRoute();
+
     return (
         <>
             {includePlaceholder && asPopover ? (
@@ -405,7 +426,12 @@ export function Sidebar({
                             {(!asPopover || !showSidebar) && (
                                 <Collapse isOpen={showSidebar} horizontal>
                                     <Menu
-                                        className="max-md:nx-hidden"
+                                        className={cx(
+                                            "max-md:nx-hidden",
+                                            css({
+                                                "border": "1px solid yellow"
+                                            })
+                                        )}
                                         // The sidebar menu, shows only the docs directories.
                                         directories={docsDirectories}
                                         // When the viewport size is larger than `md`, hide the anchors in
@@ -474,6 +500,98 @@ export function Sidebar({
                     </div>
                 )}
             </aside>
+            <SideMenu
+                align="left"
+                style={{
+                    "border": "1px solid red"
+                }}
+                classes={{
+                    "inner": css({
+                        "border": "1px solid red"
+                    }),
+                    "list": css({
+                        "border": "1px solid yellow"
+                    })
+                }}
+                burgerMenuButtonText={<>Navigation</>}
+                title={null}
+                items={(() => {
+                    function getSideMenuItem(item: PageItem | Item): SideMenuProps.Item | undefined {
+                        if (!(item.isUnderCurrentDocsTree ?? false)) {
+                            return undefined;
+                        }
+
+                        if (
+                            item.type === "menu" ||
+                            (item.children && (item.children.length !== 0 || !item.withIndexPage))
+                        ) {
+                            assert(is<PageItem | Item | Item>(item));
+
+                            return id<SideMenuProps.Item.SubMenu>({
+                                "isActive": (() => {
+                                    const routeWithoutHash = route.split("#");
+                                    return [routeWithoutHash, routeWithoutHash + "/"].includes(
+                                        item.route + "/"
+                                    );
+                                })(),
+                                "expandedByDefault": route.startsWith(item.route),
+                                "text": item.title + " (menu)",
+                                //"items": item.items.map(getSideMenuItems).map(exclude(undefined)),
+                                "items": ((): Item[] | PageItem[] => {
+                                    if (item.type === "menu") {
+                                        const menu = item as MenuItem;
+                                        const routes = Object.fromEntries(
+                                            (menu.children || []).map(route => [route.name, route])
+                                        );
+                                        const out: Item[] | PageItem[] = Object.entries(
+                                            menu.items || {}
+                                        ).map(([key, item]) => {
+                                            const route = routes[key] || {
+                                                "name": key,
+                                                ...("locale" in menu && { locale: menu.locale }),
+                                                "route": menu.route + "/" + key
+                                            };
+                                            return {
+                                                ...route,
+                                                ...item
+                                            };
+                                        });
+                                        return out;
+                                    }
+
+                                    assert(item.children !== undefined);
+
+                                    return item.children;
+                                })()
+                                    .map(getSideMenuItem)
+                                    .filter(exclude(undefined)),
+                                "linkProps": !("withIndexPage" in item && !!item.withIndexPage)
+                                    ? undefined
+                                    : {
+                                          "href": item.route
+                                      }
+                            });
+                        }
+
+                        if (item.type === "separator") {
+                            return undefined;
+                        }
+
+                        return id<SideMenuProps.Item.Link>({
+                            "isActive": !!(
+                                item.route && [route, route + "/"].includes(item.route + "/")
+                            ),
+                            "text": item.title,
+                            "linkProps": {
+                                "href": (item as PageItem).href ?? item.route,
+                                "target": (item as PageItem).newWindow ?? false ? "_blank" : undefined
+                            }
+                        });
+                    }
+
+                    return docsDirectories.map(getSideMenuItem).filter(exclude(undefined));
+                })()}
+            />
         </>
     );
 }
