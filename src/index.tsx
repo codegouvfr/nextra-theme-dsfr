@@ -15,7 +15,6 @@ import { ActiveAnchorProvider, ConfigProvider, useConfig } from "./contexts";
 import { getComponents } from "./mdx-components";
 import { renderComponent } from "./utils";
 import { useStyles } from "tss-react/dsfr";
-import { fr } from "@codegouvfr/react-dsfr";
 
 interface BodyProps {
     themeContext: PageTheme;
@@ -26,7 +25,7 @@ interface BodyProps {
 }
 
 const classes = {
-    toc: cn("nextra-toc nx-order-last nx-hidden nx-w-64 nx-shrink-0 xl:nx-block print:nx-hidden"),
+    //toc: cn("nextra-toc nx-order-last nx-hidden nx-w-64 nx-shrink-0 xl:nx-block print:nx-hidden"),
     main: cn("nx-w-full nx-break-words")
 };
 
@@ -131,14 +130,18 @@ const InnerLayout = ({
     const themeContext = { ...activeThemeContext, ...frontMatter };
     const hideSidebar = !themeContext.sidebar || themeContext.layout === "raw" || activeType === "page";
 
+    const { css } = useStyles();
+
+    const classesToc = css({ "order": 999 });
+
     const tocEl =
         activeType === "page" || !themeContext.toc || themeContext.layout !== "default" ? (
             themeContext.layout !== "full" &&
             themeContext.layout !== "raw" && (
-                <nav className={classes.toc} aria-label="table of contents" />
+                <nav className={classesToc} aria-label="table of contents" />
             )
         ) : (
-            <nav className={cn(classes.toc, "nx-px-4")} aria-label="table of contents">
+            <nav className={cn(classesToc, "nx-px-4")} aria-label="table of contents">
                 {renderComponent(config.toc.component, {
                     headings: config.toc.float ? headings : [],
                     filePath
@@ -150,8 +153,6 @@ const InnerLayout = ({
     const isRTL = localeConfig ? localeConfig.direction === "rtl" : config.direction === "rtl";
 
     const direction = isRTL ? "rtl" : "ltr";
-
-    const { css } = useStyles();
 
     return (
         // This makes sure that selectors like `[dir=ltr] .nextra-container` work
@@ -179,9 +180,6 @@ const InnerLayout = ({
                 })}
             <div
                 className={css({
-                    ...fr.spacing("margin", {
-                        "rightLeft": "auto"
-                    }),
                     "display": "flex",
                     "maxWith": themeContext.layout === "raw" ? undefined : "90rem"
                 })}
@@ -215,10 +213,16 @@ const InnerLayout = ({
                         }
                     >
                         <MDXProvider
-                            components={getComponents({
-                                isRawLayout: themeContext.layout === "raw",
-                                components: config.components
-                            })}
+                            components={(() => {
+                                const components = getComponents({
+                                    isRawLayout: themeContext.layout === "raw",
+                                    components: config.components
+                                });
+
+                                console.log(components);
+
+                                return components;
+                            })()}
                         >
                             {children}
                         </MDXProvider>
