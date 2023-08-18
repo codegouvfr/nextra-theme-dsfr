@@ -7,7 +7,7 @@ import type { SearchResult } from "../types";
 import { HighlightMatches } from "./highlight-matches";
 import { Search } from "./search";
 import { fr } from "@codegouvfr/react-dsfr";
-import { makeStyles } from "tss-react/dsfr";
+import { tss } from "tss-react/dsfr";
 
 type SectionIndex = FlexSearch.Document<
     {
@@ -282,10 +282,10 @@ export function Flexsearch({ className }: { className?: string }): ReactElement 
     );
 }
 
-const useStyles = makeStyles<void, "resultTitle">()((...[theme, , classes]) => ({
+const useStyles = tss.withNestedSelectors<"resultTitle">().create(({ classes }) => ({
     "overlayClassName": {
         [`& .Mui-focused .${classes.resultTitle}`]: {
-            "color": theme.decisions.text.active.blueFrance.default
+            "color": fr.colors.decisions.text.active.blueFrance.default
         }
     },
     "resultTitle": {
