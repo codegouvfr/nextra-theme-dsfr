@@ -213,10 +213,16 @@ const InnerLayout = ({
                         }
                     >
                         <MDXProvider
-                            components={getComponents({
-                                isRawLayout: themeContext.layout === "raw",
-                                components: config.components
-                            })}
+                            components={(() => {
+                                const components = getComponents({
+                                    isRawLayout: themeContext.layout === "raw",
+                                    components: config.components
+                                });
+
+                                console.log(components);
+
+                                return components;
+                            })()}
                         >
                             {children}
                         </MDXProvider>
