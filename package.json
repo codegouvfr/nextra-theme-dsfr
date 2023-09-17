@@ -12,7 +12,8 @@
         "_format": "prettier '**/*.{ts,tsx,json,md}'",
         "format": "yarn _format --write",
         "format:check": "yarn _format --list-different",
-        "link-in-app": "ts-node --skipProject scripts/link-in-app.ts"
+        "link-in-app": "ts-node --skipProject scripts/link-in-app.ts",
+        "dev": "bash scripts/dev.sh"
     },
     "main": "dist/index.js",
     "types": "dist/index.d.ts",

@@ -32,6 +32,27 @@ $ yarn add @codegouvfr/nextra-theme-dsfr @codegouvfr/react-dsfr @mui/material @e
 
 # Contributing
 
+## Starting the demo app in dev mode
+
+```bash
+cd ~/github
+git clone https://github.com/garronej/nextra-theme-dsfr
+cd nextra-theme-dsfr
+yarn dev
+```
+
+Then in another terminal.
+
+```bash
+cd ~/github/nextra-dsfr-demo
+yarn start
+```
+
+Now you can do changes both in `~/github/nextra-theme-dsfr` and `~/github/nextra-dsfr/demo`.  
+You will see the change live in the app.
+
+> NOTE: Each time you changes any dependencies you must restart `yarn dev` and `yarn start`.
+
 ## Testing your changes in an external app
 
 You have made some changes to the code and you want to test them
