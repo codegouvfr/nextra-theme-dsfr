@@ -45,7 +45,7 @@ Then in another terminal.
 
 ```bash
 cd ~/github/nextra-dsfr-demo
-yarn start
+yarn dev
 ```
 
 Now you can do changes both in `~/github/nextra-theme-dsfr` and `~/github/nextra-dsfr/demo`.  
