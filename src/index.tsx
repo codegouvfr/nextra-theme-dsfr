@@ -160,11 +160,11 @@ const InnerLayout = ({
         // `html` element.
         <div
             dir={direction}
-            style={{
-                minHeight: "100vh",
-                display: "flex",
-                flexDirection: "column"
-            }}
+            className={css({
+                "minHeight": "100vh",
+                "display": "flex",
+                "flexDirection": "column"
+            })}
         >
             <script
                 dangerouslySetInnerHTML={{
