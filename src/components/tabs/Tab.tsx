@@ -4,6 +4,7 @@ import { useEffect, useState, type ReactNode } from "react";
 import { fr } from "@codegouvfr/react-dsfr";
 import { useTabContext } from "./context";
 import { assert } from "tsafe/assert";
+import { symToStr } from "tsafe/symToStr";
 
 export type TabProps = {
     children: ReactNode;
@@ -57,3 +58,5 @@ export function Tab(props: TabProps) {
         </div>
     );
 }
+
+Tab.displayName = symToStr({ Tab });

@@ -1,8 +1,10 @@
 "use client";
 
 import { useId, type ReactNode } from "react";
-import { fr } from "@codegouvfr/react-dsfr";
 import { TabProvider } from "./context";
+import { Tab } from "./Tab";
+import { symToStr } from "tsafe/symToStr";
+import { fr } from "@codegouvfr/react-dsfr";
 
 export type TabsProps = {
     items: string[];
@@ -28,22 +30,20 @@ export function Tabs(props: TabsProps) {
     return (
         <div className={fr.cx("fr-tabs")}>
             <ul className={fr.cx("fr-tabs__list")} role="tablist">
-                {items.map((item, index) => {
-                    return (
-                        <li key={index} role="presentation">
-                            <button
-                                id={getTabId(index)}
-                                className={fr.cx("fr-tabs__tab", "fr-tabs__tab--icon-left")}
-                                tabIndex={index === defaultIndex ? 0 : -1}
-                                role="tab"
-                                aria-selected={index === defaultIndex}
-                                aria-controls={getPanelId(index)}
-                            >
-                                {item}
-                            </button>
-                        </li>
-                    );
-                })}
+                {items.map((item, index) => (
+                    <li key={index} role="presentation">
+                        <button
+                            id={getTabId(index)}
+                            className={fr.cx("fr-tabs__tab", "fr-tabs__tab--icon-left")}
+                            tabIndex={index === defaultIndex ? 0 : -1}
+                            role="tab"
+                            aria-selected={index === defaultIndex}
+                            aria-controls={getPanelId(index)}
+                        >
+                            {item}
+                        </button>
+                    </li>
+                ))}
             </ul>
             <TabProvider
                 defaultIndex={defaultIndex}
@@ -56,3 +56,7 @@ export function Tabs(props: TabsProps) {
         </div>
     );
 }
+
+Tabs.Tab = Tab;
+
+Tabs.displayName = symToStr({ Tabs });
