@@ -14,7 +14,7 @@ import { DEFAULT_LOCALE, PartialDocsThemeConfig } from "./constants";
 import { ActiveAnchorProvider, ConfigProvider, useConfig } from "./contexts";
 import { getComponents } from "./mdx-components";
 import { renderComponent } from "./utils";
-import { useStyles } from "tss-react/dsfr";
+import { useStyles } from "./tss";
 
 interface BodyProps {
     themeContext: PageTheme;
@@ -130,7 +130,7 @@ const InnerLayout = ({
     const themeContext = { ...activeThemeContext, ...frontMatter };
     const hideSidebar = !themeContext.sidebar || themeContext.layout === "raw" || activeType === "page";
 
-    const { css } = useStyles();
+    const { css, isRTL } = useStyles();
 
     const classesToc = css({ "order": 999 });
 
@@ -148,9 +148,6 @@ const InnerLayout = ({
                 })}
             </nav>
         );
-
-    const localeConfig = config.i18n.find(l => l.locale === locale);
-    const isRTL = localeConfig ? localeConfig.direction === "rtl" : config.direction === "rtl";
 
     const direction = isRTL ? "rtl" : "ltr";
 

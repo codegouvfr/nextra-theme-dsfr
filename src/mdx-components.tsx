@@ -8,6 +8,8 @@ import type { AnchorProps } from "./components/anchor";
 import type { DocsThemeConfig } from "./constants";
 import { DetailsProvider, useDetails, useSetActiveAnchor } from "./contexts";
 import { useIntersectionObserver, useSlugs } from "./contexts/active-anchor";
+import { tss } from "./tss";
+import { fr } from "@codegouvfr/react-dsfr";
 
 // Anchor links
 function HeadingLink({
@@ -43,26 +45,49 @@ function HeadingLink({
         };
     }, [id, context, slugs, observer, setActiveAnchor]);
 
+    const { cx, classes } = useHeadingLinkStyles();
+
     return (
-        <Tag
-            className={cn(
-                "nx-font-semibold nx-tracking-tight nx-text-slate-900 dark:nx-text-slate-100",
-                {
-                    h2: "nx-mt-10 nx-border-b nx-pb-1 nx-text-3xl nx-border-neutral-200/70 contrast-more:nx-border-neutral-400 dark:nx-border-primary-100/10 contrast-more:dark:nx-border-neutral-400",
-                    h3: "nx-mt-8 nx-text-2xl",
-                    h4: "nx-mt-8 nx-text-xl",
-                    h5: "nx-mt-8 nx-text-lg",
-                    h6: "nx-mt-8 nx-text-base"
-                }[Tag]
-            )}
-            {...props}
-        >
+        <Tag {...props} className={cx(classes.root, props.className)}>
             {children}
-            <span className="nx-absolute -nx-mt-20" id={id} ref={obRef} />
-            <a href={`#${id}`} className="subheading-anchor" aria-label="Permalink for this section" />
+            <span id={id} ref={obRef} />
+            <a
+                className={classes.subheadingAnchor}
+                href={`#${id}`}
+                aria-label="Permalink for this section"
+            />
         </Tag>
     );
 }
+
+const useHeadingLinkStyles = tss
+    .withName({ HeadingLink })
+    .withNestedSelectors<"subheadingAnchor">()
+    .create(({ isRTL, classes }) => ({
+        "root": {
+            "&:hover, &:active": {
+                [`& .${classes.subheadingAnchor}`]: {
+                    "opacity": 1,
+                    "color": fr.colors.decisions.text.disabled.grey.default
+                }
+            }
+        },
+        "subheadingAnchor": {
+            "opacity": 0,
+            "backgroundImage": "unset",
+            "marginLeft": isRTL ? undefined : fr.spacing("1v"),
+            "marginRight": isRTL ? fr.spacing("1v") : undefined,
+            "&:after": {
+                "content": '"#"',
+                ...fr.spacing("padding", {
+                    "rightLeft": "1v"
+                })
+            },
+            "&&:hover": {
+                "color": fr.colors.decisions.text.actionHigh.blueFrance.default
+            }
+        }
+    }));
 
 const findSummary = (children: ReactNode) => {
     let summary: ReactNode = null;
@@ -174,12 +199,7 @@ export const getComponents = ({
 
     const context = { index: 0 };
     return {
-        h1: props => (
-            <h1
-                className="nx-mt-2 nx-text-4xl nx-font-bold nx-tracking-tight nx-text-slate-900 dark:nx-text-slate-100"
-                {...props}
-            />
-        ),
+        h1: props => <h1 {...(console.log(props), props)} />,
         h2: props => <HeadingLink tag="h2" context={context} {...props} />,
         h3: props => <HeadingLink tag="h3" context={context} {...props} />,
         h4: props => <HeadingLink tag="h4" context={context} {...props} />,
