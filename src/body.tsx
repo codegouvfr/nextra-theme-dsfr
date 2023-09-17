@@ -5,7 +5,7 @@ import "./polyfill";
 import type { PageTheme } from "nextra/normalize-pages";
 import { useConfig } from "./contexts";
 import { renderComponent } from "./utils";
-import { tss } from "tss-react";
+import { tss } from "tss-react/dsfr";
 import { fr } from "@codegouvfr/react-dsfr";
 
 interface BodyProps {

@@ -11,7 +11,7 @@ import { ActiveAnchorProvider, ConfigProvider, useConfig } from "./contexts";
 import { getComponents } from "./mdx-components";
 import { renderComponent } from "./utils";
 import { Body } from "./body";
-import { tss } from "tss-react";
+import { tss } from "tss-react/dsfr";
 import { fr } from "@codegouvfr/react-dsfr";
 
 const InnerLayout = ({
