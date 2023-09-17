@@ -199,12 +199,12 @@ export const getComponents = ({
 
     const context = { index: 0 };
     return {
-        h1: props => <h1 {...props} />,
-        h2: props => <HeadingLink tag="h2" context={context} {...props} />,
-        h3: props => <HeadingLink tag="h3" context={context} {...props} />,
-        h4: props => <HeadingLink tag="h4" context={context} {...props} />,
-        h5: props => <HeadingLink tag="h5" context={context} {...props} />,
-        h6: props => <HeadingLink tag="h6" context={context} {...props} />,
+        "h1": props => <h1 {...props} />,
+        "h2": props => <HeadingLink tag="h2" context={context} {...props} />,
+        "h3": props => <HeadingLink tag="h3" context={context} {...props} />,
+        "h4": props => <HeadingLink tag="h4" context={context} {...props} />,
+        "h5": props => <HeadingLink tag="h5" context={context} {...props} />,
+        "h6": props => <HeadingLink tag="h6" context={context} {...props} />,
         ul: props => (
             <ul className="nx-mt-6 nx-list-disc first:nx-mt-0 ltr:nx-ml-6 rtl:nx-mr-6" {...props} />
         ),
