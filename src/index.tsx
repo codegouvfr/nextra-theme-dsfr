@@ -14,7 +14,7 @@ import { DEFAULT_LOCALE, PartialDocsThemeConfig } from "./constants";
 import { ActiveAnchorProvider, ConfigProvider, useConfig } from "./contexts";
 import { getComponents } from "./mdx-components";
 import { renderComponent } from "./utils";
-import { useStyles } from "./tss";
+import { useStyles, tss } from "./tss";
 
 interface BodyProps {
     themeContext: PageTheme;
@@ -94,7 +94,7 @@ const Body = ({
     );
 };
 
-const InnerLayout = ({
+const ContextualizedLayout = ({
     filePath,
     pageMap,
     frontMatter,
@@ -151,18 +151,15 @@ const InnerLayout = ({
 
     const direction = isRTL ? "rtl" : "ltr";
 
+    const { classes } = useLayoutStyles({
+        "isRawLayout": themeContext.layout === "raw"
+    });
+
     return (
         // This makes sure that selectors like `[dir=ltr] .nextra-container` work
         // before hydration as Tailwind expects the `dir` attribute to exist on the
         // `html` element.
-        <div
-            dir={direction}
-            className={css({
-                "minHeight": "100vh",
-                "display": "flex",
-                "flexDirection": "column"
-            })}
-        >
+        <div dir={direction} className={classes.root}>
             <script
                 dangerouslySetInnerHTML={{
                     __html: `document.documentElement.setAttribute('dir','${direction}')`
@@ -175,12 +172,7 @@ const InnerLayout = ({
                     flatDirectories,
                     items: topLevelNavbarItems
                 })}
-            <div
-                className={css({
-                    "display": "flex",
-                    "maxWith": themeContext.layout === "raw" ? undefined : "90rem"
-                })}
-            >
+            <div className={classes.content}>
                 <ActiveAnchorProvider>
                     <Sidebar
                         docsDirectories={docsDirectories}
@@ -228,10 +220,25 @@ const InnerLayout = ({
 export default function Layout({ children, ...context }: NextraThemeLayoutProps): ReactElement {
     return (
         <ConfigProvider value={context}>
-            <InnerLayout {...context.pageOpts}>{children}</InnerLayout>
+            <ContextualizedLayout {...context.pageOpts}>{children}</ContextualizedLayout>
         </ConfigProvider>
     );
 }
+
+const useLayoutStyles = tss
+    .withName({ Layout })
+    .withParams<{ isRawLayout: boolean }>()
+    .create(({ isRawLayout }) => ({
+        "root": {
+            "minHeight": "100vh",
+            "display": "flex",
+            "flexDirection": "column"
+        },
+        "content": {
+            "display": "flex",
+            "maxWith": isRawLayout ? undefined : "90rem"
+        }
+    }));
 
 export { useConfig, PartialDocsThemeConfig as DocsThemeConfig };
 export { useMDXComponents } from "nextra/mdx";
