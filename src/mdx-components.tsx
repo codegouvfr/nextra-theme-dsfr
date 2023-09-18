@@ -197,7 +197,7 @@ export const getComponents = ({
         return { a: A };
     }
 
-    const { classes } = useMdxComponentsStyles();
+    const { cx, classes } = useMdxComponentsStyles();
 
     const context = { index: 0 };
     return {
@@ -207,17 +207,11 @@ export const getComponents = ({
         "h4": props => <HeadingLink tag="h4" context={context} {...props} />,
         "h5": props => <HeadingLink tag="h5" context={context} {...props} />,
         "h6": props => <HeadingLink tag="h6" context={context} {...props} />,
-        "ul": props => <ul className={classes.ulAndOl} {...props} />,
-        "ol": props => <ol className={classes.ulAndOl} {...props} />,
-        "li": props => <li {...props} />,
-        blockquote: props => (
-            <blockquote
-                className={cn(
-                    "nx-mt-6 nx-border-gray-300 nx-italic nx-text-gray-700 dark:nx-border-gray-700 dark:nx-text-gray-400",
-                    "first:nx-mt-0 ltr:nx-border-l-2 ltr:nx-pl-6 rtl:nx-border-r-2 rtl:nx-pr-6"
-                )}
-                {...props}
-            />
+        "ul": props => <ul {...props} className={cx(classes.ulAndOl, props.className)} />,
+        "ol": props => <ol {...props} className={cx(classes.ulAndOl, props.className)} />,
+        "li": props => <li {...props} className={cx(classes.li, props.className)} />,
+        "blockquote": props => (
+            <blockquote {...props} className={cx(props.className, classes.blockquote)} />
         ),
         hr: props => <hr className="nx-my-8 dark:nx-border-gray-900" {...props} />,
         a: Link,
@@ -234,8 +228,36 @@ export const getComponents = ({
     };
 };
 
-const useMdxComponentsStyles = tss.withName("MDXComponents").create(({ isRTL }) => ({
-    "ulAndOl": {
-        [isRTL ? "marginRight" : "marginLeft"]: fr.spacing("6v")
-    }
-}));
+const useMdxComponentsStyles = tss
+    .withName("MDXComponents")
+    .withNestedSelectors<"ulAndOl">()
+    .create(({ isRTL, classes }) => ({
+        "ulAndOl": {
+            [`margin${isRTL ? "Right" : "Left"}`]: fr.spacing("6v"),
+            "marginBottom": fr.spacing("6v")
+        },
+        "li": {
+            [`& > .${classes.ulAndOl}`]: {
+                [`margin${isRTL ? "Right" : "Left"}`]: "unset",
+                "marginBottom": "unset"
+            }
+        },
+        "blockquote": {
+            "marginTop": fr.spacing("6v"),
+            "& > p:first-of-type": {
+                "marginTop": 0
+            },
+            "& > p:last-of-type": {
+                "marginBottom": 0
+            },
+            "borderColor": fr.colors.decisions.text.mention.grey.default,
+            "color": fr.colors.decisions.text.mention.grey.default,
+            "fontStyle": "italic",
+            "borderWidth": 0,
+            [`border${isRTL ? "Right" : "Left"}Width`]: 2,
+            "borderStyle": "solid",
+            "paddingLeft": fr.spacing("6v"),
+            "margin": 0,
+            "marginBottom": fr.spacing("6v")
+        }
+    }));
