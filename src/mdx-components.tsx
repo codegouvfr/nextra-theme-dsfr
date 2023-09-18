@@ -171,15 +171,7 @@ const Summary = (props: ComponentProps<"summary">): ReactElement => {
 const EXTERNAL_HREF_REGEX = /https?:\/\//;
 
 export const Link = ({ href = "", className, ...props }: AnchorProps) => (
-    <Anchor
-        href={href}
-        newWindow={EXTERNAL_HREF_REGEX.test(href)}
-        className={cn(
-            "nx-text-primary-600 nx-underline nx-decoration-from-font [text-underline-position:from-font]",
-            className
-        )}
-        {...props}
-    />
+    <Anchor href={href} newWindow={EXTERNAL_HREF_REGEX.test(href)} className={className} {...props} />
 );
 
 const A = ({ href = "", ...props }) => (
@@ -214,7 +206,7 @@ export const getComponents = ({
             <blockquote {...props} className={cx(props.className, classes.blockquote)} />
         ),
         "hr": props => <hr {...props} className={cx(classes.hr, props.className)} />,
-        a: Link,
+        "a": Link,
         table: props => <Table className="nextra-scrollbar nx-mt-6 nx-p-0 first:nx-mt-0" {...props} />,
         p: props => <p className="nx-mt-6 nx-leading-7 first:nx-mt-0" {...props} />,
         tr: Tr,
