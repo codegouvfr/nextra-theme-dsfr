@@ -197,6 +197,8 @@ export const getComponents = ({
         return { a: A };
     }
 
+    const { classes } = useMdxComponentsStyles();
+
     const context = { index: 0 };
     return {
         "h1": props => <h1 {...props} />,
@@ -205,13 +207,9 @@ export const getComponents = ({
         "h4": props => <HeadingLink tag="h4" context={context} {...props} />,
         "h5": props => <HeadingLink tag="h5" context={context} {...props} />,
         "h6": props => <HeadingLink tag="h6" context={context} {...props} />,
-        ul: props => (
-            <ul className="nx-mt-6 nx-list-disc first:nx-mt-0 ltr:nx-ml-6 rtl:nx-mr-6" {...props} />
-        ),
-        ol: props => (
-            <ol className="nx-mt-6 nx-list-decimal first:nx-mt-0 ltr:nx-ml-6 rtl:nx-mr-6" {...props} />
-        ),
-        li: props => <li className="nx-my-2" {...props} />,
+        "ul": props => <ul className={classes.ulAndOl} {...props} />,
+        "ol": props => <ol className={classes.ulAndOl} {...props} />,
+        "li": props => <li {...props} />,
         blockquote: props => (
             <blockquote
                 className={cn(
@@ -235,3 +233,9 @@ export const getComponents = ({
         ...components
     };
 };
+
+const useMdxComponentsStyles = tss.withName("MDXComponents").create(({ isRTL }) => ({
+    "ulAndOl": {
+        [isRTL ? "marginRight" : "marginLeft"]: fr.spacing("6v")
+    }
+}));
