@@ -213,7 +213,7 @@ export const getComponents = ({
         "blockquote": props => (
             <blockquote {...props} className={cx(props.className, classes.blockquote)} />
         ),
-        hr: props => <hr className="nx-my-8 dark:nx-border-gray-900" {...props} />,
+        "hr": props => <hr {...props} className={cx(classes.hr, props.className)} />,
         a: Link,
         table: props => <Table className="nextra-scrollbar nx-mt-6 nx-p-0 first:nx-mt-0" {...props} />,
         p: props => <p className="nx-mt-6 nx-leading-7 first:nx-mt-0" {...props} />,
@@ -259,5 +259,11 @@ const useMdxComponentsStyles = tss
             "paddingLeft": fr.spacing("6v"),
             "margin": 0,
             "marginBottom": fr.spacing("6v")
+        },
+        "hr": {
+            ...fr.spacing("margin", {
+                "topBottom": "8v"
+            }),
+            "padding": 1
         }
     }));
