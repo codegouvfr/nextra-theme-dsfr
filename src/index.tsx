@@ -236,7 +236,8 @@ const useLayoutStyles = tss
         },
         "content": {
             "display": "flex",
-            "maxWith": isRawLayout ? undefined : "90rem"
+            "maxWidth": isRawLayout ? undefined : "90rem",
+            "margin": "auto"
         }
     }));
 
